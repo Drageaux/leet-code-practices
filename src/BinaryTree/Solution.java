@@ -1,6 +1,7 @@
 package BinaryTree;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 
@@ -20,9 +21,8 @@ public class Solution {
         List<Integer> result = new ArrayList<Integer>();
         if (currNode == null) return result;
 
-
         Stack<TreeNode> needVisit = new Stack<TreeNode>();
-        Stack<TreeNode> noVisit = new Stack<TreeNode>();
+        HashSet<TreeNode> noVisit = new HashSet<TreeNode>(); // HashSet has O(1) contains()
 
         result.add(currNode.val); // root always the first element
         needVisit.push(currNode);
@@ -32,7 +32,7 @@ public class Solution {
             if (currNode == null) break;
             // if no subtrees, just pop
             if (currNode.left == null && currNode.right == null) {
-                noVisit.push(needVisit.pop());
+                noVisit.add(needVisit.pop());
                 if (needVisit.empty()) {
                     break;
                 } else {
@@ -49,7 +49,7 @@ public class Solution {
                 needVisit.push(currNode.right);
                 continue;
             } else { // if neither left nor right is valid
-                noVisit.push(needVisit.pop());
+                noVisit.add(needVisit.pop());
                 if (needVisit.empty()) {
                     break;
                 }
