@@ -102,4 +102,44 @@ public class Solution {
         }
         return result;
     }
+
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        TreeNode currNode = root;
+        List<Integer> result = new ArrayList<Integer>();
+        if (currNode == null) return result;
+
+        Stack<TreeNode> needVisit = new Stack<TreeNode>();
+        HashSet<TreeNode> noVisit = new HashSet<TreeNode>(); // HashSet has O(1) contains()
+
+        needVisit.push(currNode);
+
+        while (true) {
+            currNode = needVisit.peek();
+            if (currNode == null) break;
+
+            // if left is valid
+            if (currNode.left != null && !noVisit.contains(currNode.left)) {
+                // keep sticking left
+                needVisit.push(currNode.left);
+                continue;
+            }
+            // if left isn't valid but right is
+            else if (currNode.right != null && !noVisit.contains(currNode.right)) {
+                // go right
+                needVisit.push(currNode.right);
+                continue;
+            }
+            // if neither children is valid, add self to result and don't visit self again
+            else {
+                result.add(currNode.val);
+                noVisit.add(needVisit.pop());
+            }
+
+            if (needVisit.empty()) {
+                break;
+            }
+        }
+        return result;
+    }
 }
