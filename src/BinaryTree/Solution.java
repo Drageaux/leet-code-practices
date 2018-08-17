@@ -33,7 +33,7 @@ public class Solution {
         while (true) {
             currNode = needVisit.peek();
             if (currNode == null) break;
-            
+
             // if no subtrees, just pop
             if (currNode.left == null && currNode.right == null) {
                 noVisit.add(needVisit.pop());
@@ -92,18 +92,7 @@ public class Solution {
                 continue;
             }
 
-            // if no subtrees, just pop
-            if (currNode.left == null && currNode.right == null) {
-                result.add(currNode.val);
-                noVisit.add(needVisit.pop());
-                if (needVisit.empty()) {
-                    break;
-                } else {
-                    continue;
-                }
-            }
-
-            // if left visited/empty and no right, take currNode and pop
+            // if neither children is valid, add self to result and don't visit self again
             result.add(currNode.val);
             noVisit.add(needVisit.pop());
 
