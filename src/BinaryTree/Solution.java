@@ -1,9 +1,6 @@
 package BinaryTree;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Definition for a binary tree node.
@@ -140,6 +137,62 @@ public class Solution {
                 break;
             }
         }
+        return result;
+    }
+
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        TreeNode currNode = root;
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        // List<Integer> result = new ArrayList<Integer>();
+        if (currNode == null) return result;
+
+        // first level
+        int level = 0;
+        List<Integer> firstLevel = new ArrayList<Integer>();
+        firstLevel.add(currNode.val);
+        result.add(firstLevel);
+
+        // set up queue
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        HashSet<TreeNode> noVisit = new HashSet<TreeNode>(); // HashSet has O(1) contains()
+
+        List<Integer> currLevel = new ArrayList<Integer>();
+        Queue<TreeNode> newQueue = new LinkedList<TreeNode>();
+        q.add(currNode);
+
+        // next levels
+        while (true) {
+
+            level++;
+
+            while (q.peek() != null) {
+                TreeNode child = q.poll();
+
+                if (child.left == null && child.right == null) {
+                    continue; // next child
+                }
+
+                if (child.left != null) {
+                    q.add(currNode.left);
+                    currLevel.add(currNode.left.val);
+                }
+                if (child.right != null) {
+                    q.add(currNode.right);
+                    currLevel.add(currNode.right.val);
+                }
+
+                System.out.println(q.peek().val);
+
+            }
+
+            result.add(level, currLevel);
+
+            if (q.isEmpty()) {
+                break;
+            }
+        }
+
         return result;
     }
 }
